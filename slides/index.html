@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>jasmine.js - for fun and profit</title>
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		<link rel="stylesheet" href="libs/reveal_js/css/reveal.css">
+		<link rel="stylesheet" href="libs/reveal_js/css/theme/default.css" id="theme">
+		<link rel="stylesheet" href="libs/reveal_js/lib/css/zenburn.css">
+		<script>
+			document.write( '<link rel="stylesheet" href="libs/reveal_js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+		<!--[if lt IE 9]>
+		<script src="libs/reveal_js/lib/js/html5shiv.js"></script>
+		<![endif]-->
+		<style type="text/css">
+			/*.slides {
+				top: 45% !important; 
+			}*/
+
+			.reveal ol {
+				list-style: none;
+			}
+
+			.reveal blockquote {
+				margin: 25px auto;
+			}
+
+			.reveal p {
+				margin-bottom: 30px;
+			}
+
+			.reveal section img {
+				border: 4px solid rgb(83, 83, 83);
+			}
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h1>jasmine.js</h1>
+					<h2>- for fun and profit -</h2>
+					<p>	
+						<small>/<a href="http://anders-jonsson.net">Anders Jönsson</a></small>
+					</p>
+				</section>
+				<section data-state="big">
+					<h2>Agenda</h2>
+					<ol>
+						<li>TDD and BDD</li>
+						<li>
+							jasmine.js
+							<ol>
+								<li></li>
+							</ol>
+						</li>
+						<li>Demo</li>
+						<li>Wrap up</li>
+					</ol>							
+				</section>
+
+                <section>
+                    <h1>TDD and BDD</h1>
+                    <p>
+                        
+                    </p>
+                </section>
+
+                <section>
+                    <h1>Jasmine.JS</h1>
+                    <p>
+                        It's a great lib with a decent runner
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Three parts</h2>
+                    <p>
+                        <ul>                        
+                            <li>Syntax (functions)</li>
+                            <li>Spy's</li>
+                            <li>Runner</li>
+                        </ul>
+                    </p>
+                    <p>
+                        <img src="images/three.jpg">
+                    </p>
+                </section>
+
+
+
+                <section><!-- kör script edditable 
+// kör runnern hela tiden -->
+                    <h1>Syntax</h2>
+                    <pre><code contenteditable class="js">
+var pi = function(){
+   return 3.14;
+}
+
+describe('pi specification', function(){
+   
+   it('should return correct value', function(){       
+
+       var value = pi();
+
+       expect(value).toBe(3.14);
+
+   });
+    
+});
+                    </code></pre>
+                </section> 
+
+                <section>
+                    <h3>Setting up a context</h3>
+                    <pre><code contenteditable>
+describe('...', function(){
+
+  beforeEach(function(){
+    
+  });
+
+  it('...', function(){
+
+  })
+
+});
+                    </code></pre>
+                    <p>
+                        afterEach(...) - yeah you have it... <br>but you should never use it
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Matchers</h2>
+                    <h3>expect(...)</h3>
+                    <p>
+                        <ul>
+                            <li>.toBe(...)</li>
+                            <li>.toBeTruthy()</li>
+                            <li>.toBeFalsy()</li>
+                            <li>.toEqual(...)</li>
+                        <ul>
+                    </p>
+                    <p>
+                        <ul>
+                            <li>.toHaveBeenCalled()</li>
+                            <li>.toHaveBeenCalledWith(...)</li>                            
+                        <ul>
+                    </p>
+                </section>  
+
+                <section>   
+                    <h1>Spy's<h1>
+                    <img src="images/spy.jpg">
+                </section> 
+
+    			<section>   
+                    <h2>it's something that looks like the original<h2>
+                    <img src="images/at-at.jpg"> <img src="images/at-at-dog.jpg">
+                    <h2>but it isn't</h2>
+                </section> 
+
+                <section>
+                    <h2>How to spy</h2>
+                    <p>Use jasmine.createSpy('name') or spyOn(obj, 'function')</p>
+                    <pre><code contenteditable>
+var mail = {};
+mail.send = jasmine.createSpy('send');
+
+mail.send();
+
+expect(mail.send).toHaveBeenCalled();                    
+                    </code></pre>
+                    <p>
+                        <ul>
+                            <li>method.mostRecentCall.args</li>
+                            <li>method.callCount</li>
+                        <ul>                    
+                    </p>                        
+                </section>                  
+
+                <section>
+                    <h2>Return from a spy</h2>
+                    <pre><code contenteditable>
+!skriv om detta
+var mail = {};
+mail.send = jasmine
+                .createSpy('send')
+                .andReturn(true);
+
+var result = mail.send();
+
+expect(result).toBeTruthy();
+                    </code></pre> 
+                    <p>
+                        <ul>
+                            <li>method.return(...)</li>
+                            <li>method.andCallFake(...)</li>
+                            <li>method.andCallThrough()</li>
+                        <ul>                    
+                    </p>                                           
+                </section> 
+
+                <section>
+                    <h1>The runner</h1> 
+                    
+                    
+                </section>
+
+                <section>
+                    <h1>Specifying / testing your views</h1>
+                    <p>
+                        See your libs as external dependencies, remove them from your test. E.g. use spy's instead of Zepto/jQuery/etc. 
+                    </p>
+                </section>
+
+                <section>   
+                    <h2>Encapsulate concepts</h2>
+                    <p>
+                        Encapsulate concepts in the view in the same way as you should have done in the controller / model / route 
+                    </p>
+                    <p>
+                        <img src="images/encapsulate.png">
+                    </p>
+                </section>
+
+                <section>
+                    <h1>Demo</h1>
+                    <p>Warning, the demo might be a bit overwhelming if you have never seen / done TDD and Jasmine.JS before</p>
+                    <p><small>(but it's on github if you want to check it out later)</small></p>
+                </section>
+
+                <section>
+                    <h1>Products</h1>    
+                    <h3>View: ProductsView</h3>
+                    <h3>Model: ProductModel</h3>
+                    <h3>Collection: ProductsCollection</h3>
+                </section>                
+
+                <section>
+                    <h2>Do's and dont's with Jasmine.JS:</h2>
+                    <ul>
+                        <li>Never use wait(...)</li>
+                        <li>Never touch the DOM</li>
+                        <li>Never do AJAX calls</li>
+                        <li>Use spy's</li>
+                        <li>Keep contexts / setups small</li>
+                        <li>Fix / remove fragile specifications / test</li>
+                        <li>Never use afterEach(...)</li>
+                        <li>Use xit / xdescribe for pending stuff</li>
+                        <li>Run them in a browser, headless is a dangerous thing (unless your doing node.js)</li>
+                        <li>Focus on having 0 failing and 0 pending</li>
+                        <li>Use a CI to exercise the specification / tests</li>
+                        <li>Focus on behaviors</li>
+                        <li>Have fun!</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h1>Thanks!</h1>
+                    <p>
+                    <ul>
+                        <li><a href="https://twitter.com/#!/anjonsson">#anjonsson</a></li>
+                        <li><a href="https://github.com/archive">https://github.com/archive</a></li>
+                    </ul>
+                </section>
+
+				<section>
+					<h2></h2>
+					<p></p>
+				</section>
+
+
+
+				<section>
+					tips, do real context, sugger with describe
+					<ul>
+						<li>https://github.com/archive/presentations/</li>
+					</ul>
+				</section>			
+			</div>
+		</div>
+
+		<script src="libs/reveal_js/lib/js/head.min.js"></script>
+		<script src="libs/reveal_js/js/reveal.min.js"></script>
+
+		<script>
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/none
+				dependencies: [
+					{ src: 'libs/reveal_js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'libs/reveal_js/plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'libs/reveal_js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'libs/reveal_js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'libs/reveal_js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'libs/reveal_js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+			// Change to prevent reflow
+			var items = document.querySelectorAll('li');
+			Array.prototype.forEach.call(items, function (item) {
+				var html = item.innerHTML;
+				if (html.indexOf('http') != -1) {
+					item.innerHTML = html.link(html);
+				}
+			})
+		</script>
+
+	</body>
+</html>
